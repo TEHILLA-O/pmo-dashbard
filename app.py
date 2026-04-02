@@ -8,7 +8,7 @@ from utils.metrics import compute_portfolio_executive_kpis
 from utils.styles import apply_global_styles, glass_hero_intro, glass_tip
 
 st.set_page_config(
-    page_title="PMO Portfolio Intelligence Dashboard",
+    page_title="Project Portfolio Manager KPI",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -16,8 +16,8 @@ st.set_page_config(
 render_sidebar_navigation()
 apply_global_styles()
 
-st.title("PMO Portfolio Intelligence Dashboard")
-st.caption("Enterprise portfolio governance and decision-support platform")
+st.title("Project Portfolio Manager KPI")
+st.caption("Portfolio governance, delivery metrics, and decision-support")
 
 bundle = get_active_data_bundle()
 projects = bundle["projects"]

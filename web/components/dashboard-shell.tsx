@@ -22,9 +22,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen">
       <aside className="glass-sidebar w-64 shrink-0 border-r border-white/10 p-6">
         <p className="font-[family-name:var(--font-instrument)] text-lg font-normal tracking-tight text-white">
-          PMO Portfolio
+          Project Portfolio Manager
         </p>
-        <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-zinc-500">Governance</p>
+        <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-zinc-500">KPI</p>
         <nav className="mt-8 flex flex-col gap-1">
           {NAV.map(({ href, label }) => {
             const active = pathname === href || (href !== "/" && pathname.startsWith(href));

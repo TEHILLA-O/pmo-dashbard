@@ -13,11 +13,11 @@ export default function HomePage() {
     <div className="mx-auto max-w-6xl space-y-10">
       <header>
         <h1 className="font-[family-name:var(--font-instrument)] text-3xl font-normal tracking-tight text-white md:text-4xl">
-          PMO Portfolio Intelligence Dashboard
+          Project Portfolio Manager KPI
         </h1>
         <p className="mt-2 text-sm text-zinc-500">
-          Enterprise portfolio governance — add or edit projects under <strong className="text-zinc-400">Data / Admin</strong>{" "}
-          (saved in this browser).
+          Portfolio governance and key performance indicators — add or edit projects under{" "}
+          <strong className="text-zinc-400">Data / Admin</strong> (saved in this browser).
         </p>
       </header>
 

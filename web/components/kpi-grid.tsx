@@ -32,7 +32,9 @@ export function KpiGrid({ k }: { k: ExecutiveKpis }) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">Snapshot KPIs</h2>
+      <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+        Portfolio manager KPIs
+      </h2>
       {rows.map((row, i) => (
         <div key={i} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {row.map(([label, val]) => (

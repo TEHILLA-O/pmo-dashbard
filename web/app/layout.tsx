@@ -18,8 +18,8 @@ const instrument = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "PMO Portfolio Intelligence",
-  description: "Portfolio governance dashboard",
+  title: "Project Portfolio Manager KPI",
+  description: "Project portfolio manager KPI dashboard — governance, delivery, and capacity",
 };
 
 export default function RootLayout({
