@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PMO Portfolio Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg0: #0a0c10;
+        --bg1: #121826;
+        --glass: rgba(255, 255, 255, 0.06);
+        --border: rgba(255, 255, 255, 0.12);
+        --text: #e8ecf4;
+        --muted: #8b95a8;
+        --accent: #5eead4;
+        --accent-dim: #2dd4bf;
+        --glow: rgba(94, 234, 212, 0.25);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Syne", system-ui, sans-serif;
+        color: var(--text);
+        background: radial-gradient(ellipse 120% 80% at 50% -20%, #1a2332 0%, var(--bg0) 45%),
+          linear-gradient(165deg, var(--bg0) 0%, var(--bg1) 100%);
+        overflow-x: hidden;
+      }
+
+      .noise {
+        position: fixed;
+        inset: 0;
+        opacity: 0.04;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .wrap {
+        max-width: 52rem;
+        margin: 0 auto;
+        padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 4vw, 2rem);
+        position: relative;
+      }
+
+      .eyebrow {
+        font-size: 0.75rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: clamp(2.5rem, 7vw, 3.75rem);
+        line-height: 1.08;
+        margin: 0 0 1rem;
+        letter-spacing: -0.02em;
+      }
+
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .lead {
+        font-size: 1.05rem;
+        line-height: 1.65;
+        color: var(--muted);
+        max-width: 36rem;
+        margin: 0 0 2.25rem;
+      }
+
+      .card {
+        background: var(--glass);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        padding: 1.75rem 1.75rem 1.5rem;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 24px 48px -24px var(--glow);
+      }
+
+      .card p {
+        margin: 0 0 1.25rem;
+        font-size: 0.95rem;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      a.btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.35rem;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 0.65rem;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      }
+
+      a.btn-primary {
+        background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+        color: #041014;
+        box-shadow: 0 8px 28px -8px var(--glow);
+      }
+
+      a.btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 36px -10px var(--glow);
+      }
+
+      a.btn-ghost {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      a.btn-ghost:hover {
+        border-color: rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .footer {
+        margin-top: 3rem;
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .footer code {
+        font-size: 0.78em;
+        padding: 0.15rem 0.4rem;
+        border-radius: 0.35rem;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">Portfolio governance</p>
+      <h1>PMO intelligence, <em>one click away</em></h1>
+      <p class="lead">
+        Executive overview, risk and health, resource allocation, prioritisation, weekly status, and
+        data admin — hosted on Streamlit Cloud.
+      </p>
+
+      <div class="card">
+        <p>
+          Replace the button link below with your Streamlit Cloud URL after you deploy the app from
+          this same GitHub repository.
+        </p>
+        <div class="actions">
+          <!-- CONFIG: set href to your Streamlit app, e.g. https://your-app.streamlit.app -->
+          <a class="btn btn-primary" href="https://YOUR-APP-NAME.streamlit.app" rel="noopener noreferrer">
+            Open dashboard
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            class="btn btn-ghost"
+            href="https://github.com/YOUR_USER/YOUR_REPO"
+            rel="noopener noreferrer"
+          >
+            View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <p class="footer">
+        Vercel project <strong>Root Directory</strong> should be <code>landing</code>. The Streamlit
+        app deploys from the repository root on Streamlit Community Cloud with main file
+        <code>app.py</code>.
+      </p>
+    </div>
+  </body>
+</html>

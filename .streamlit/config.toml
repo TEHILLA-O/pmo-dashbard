@@ -1,0 +1,4 @@
+# Single custom sidebar nav (see components/navigation.py).
+# Hides Streamlit's automatic multipage list so it is not duplicated.
+[client]
+showSidebarNavigation = false
