@@ -24,7 +24,7 @@ export default function PredictivePage() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="glass-card rounded-2xl p-6">
           <p className="text-xs uppercase tracking-wider text-zinc-500">Portfolio mean health</p>
-          <p className="mt-2 font-[family-name:var(--font-instrument)] text-4xl text-teal-300">
+          <p className="mt-2 font-[family-name:var(--font-instrument)] text-4xl text-emerald-300">
             {avgHealth.toFixed(1)}
           </p>
         </div>

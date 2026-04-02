@@ -29,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${instrument.variable} font-sans antialiased`}>
+      <body
+        className={`${syne.variable} ${instrument.variable} font-sans antialiased selection:bg-violet-500/30 selection:text-white`}
+      >
         <Providers>
           <DashboardShell>{children}</DashboardShell>
         </Providers>

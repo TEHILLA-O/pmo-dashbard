@@ -28,7 +28,7 @@ export function PriorityMixBars({ projects }: { projects: ProjectRow[] }) {
     return [
       { name: "High", count: h, fill: "#f87171" },
       { name: "Medium", count: m, fill: "#fbbf24" },
-      { name: "Low", count: l, fill: "#5eead4" },
+      { name: "Low", count: l, fill: "#34d399" },
     ];
   }, [projects]);
 

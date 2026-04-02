@@ -104,7 +104,7 @@ export default function ExecutivePage() {
 }
 
 function Section({ title }: { title: string }) {
-  return <p className="text-xs font-semibold uppercase tracking-wider text-teal-400/90">{title}</p>;
+  return <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400/90">{title}</p>;
 }
 
 function KpiLine({ label, value }: { label: string; value: string }) {

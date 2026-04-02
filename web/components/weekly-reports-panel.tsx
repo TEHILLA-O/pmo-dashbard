@@ -49,7 +49,7 @@ export function WeeklyReportsPanel() {
             setShowAdd((v) => !v);
             setEditingId(null);
           }}
-          className="shrink-0 rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-40"
+          className="shrink-0 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {showAdd ? "Close form" : "Add weekly update"}
         </button>
@@ -105,7 +105,7 @@ export function WeeklyReportsPanel() {
             <article key={u.update_id} className="glass-card rounded-xl p-5 text-sm">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div className="flex flex-wrap items-baseline gap-3">
-                  <span className="font-mono text-xs text-teal-400">{u.project_id}</span>
+                  <span className="font-mono text-xs text-emerald-400">{u.project_id}</span>
                   <span className="text-xs text-zinc-500">
                     {reportingDateInputValue(u.reporting_week)}
                   </span>
@@ -118,7 +118,7 @@ export function WeeklyReportsPanel() {
                       setShowAdd(false);
                       setEditingId(u.update_id);
                     }}
-                    className="text-xs text-teal-400 hover:underline"
+                    className="text-xs text-emerald-400 hover:underline"
                   >
                     Edit
                   </button>
@@ -213,9 +213,9 @@ function WeeklyUpdateForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="glass-card space-y-4 rounded-xl border border-teal-500/25 p-5 text-sm"
+      className="glass-card space-y-4 rounded-xl border border-emerald-500/25 p-5 text-sm"
     >
-      <p className="text-xs font-semibold uppercase tracking-wider text-teal-400/90">
+      <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400/90">
         {mode === "add" ? "New weekly update" : "Edit weekly update"}
       </p>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -296,7 +296,7 @@ function WeeklyUpdateForm({
       <div className="flex flex-wrap gap-2">
         <button
           type="submit"
-          className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-500"
+          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500"
         >
           {mode === "add" ? "Save update" : "Save changes"}
         </button>

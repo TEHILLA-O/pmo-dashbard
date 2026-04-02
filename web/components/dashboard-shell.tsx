@@ -7,6 +7,7 @@ const NAV = [
   { href: "/", label: "Home" },
   { href: "/executive", label: "Executive Overview" },
   { href: "/portfolio", label: "Portfolio View" },
+  { href: "/milestones", label: "Milestones" },
   { href: "/risk", label: "Risk & Health" },
   { href: "/resources", label: "Resources" },
   { href: "/prioritization", label: "Prioritization" },
@@ -19,9 +20,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="flex min-h-screen">
-      <aside className="glass-sidebar w-64 shrink-0 border-r border-white/10 p-6">
-        <p className="font-[family-name:var(--font-instrument)] text-lg font-normal tracking-tight text-white">
+    <div className="liquid-shell flex min-h-screen">
+      <aside className="glass-sidebar w-64 shrink-0 border-r p-6">
+        <p className="brand-mark font-[family-name:var(--font-instrument)] text-lg font-normal tracking-tight text-white">
           Project Portfolio Manager
         </p>
         <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-zinc-500">KPI</p>
@@ -32,10 +33,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={href}
                 href={href}
-                className={`rounded-lg px-3 py-2 text-sm transition ${
+                className={`nav-glass-link rounded-lg px-3 py-2 text-sm ${
                   active
-                    ? "bg-teal-500/15 text-teal-200 ring-1 ring-teal-400/30"
-                    : "text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
+                    ? "nav-glass-link--active bg-violet-500/20 text-violet-100 ring-1 ring-violet-400/35"
+                    : "text-violet-200/55 hover:bg-white/[0.07] hover:text-violet-50"
                 }`}
               >
                 {label}
@@ -44,7 +45,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
       </aside>
-      <main className="min-w-0 flex-1 p-6 md:p-10">{children}</main>
+      <main className="liquid-main min-w-0 flex-1 p-6 md:p-10">{children}</main>
     </div>
   );
 }

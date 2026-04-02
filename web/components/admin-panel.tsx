@@ -110,7 +110,7 @@ export function AdminPanel() {
       )}
 
       <section className="glass-card space-y-4 rounded-2xl p-6">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-teal-400/90">Add project</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-emerald-400/90">Add project</h2>
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="block text-xs text-zinc-500">
             Name *
@@ -230,15 +230,15 @@ export function AdminPanel() {
             });
             setAddForm(emptyForm());
           }}
-          className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-500 disabled:opacity-40"
+          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-40"
         >
           Add project
         </button>
       </section>
 
       {editing && (
-        <section className="glass-card space-y-4 rounded-2xl border border-teal-500/30 p-6">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-teal-400/90">
+        <section className="glass-card space-y-4 rounded-2xl border border-emerald-500/30 p-6">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-emerald-400/90">
             Edit {editing.project_id}
           </h2>
           <EditFields form={editForm} setForm={setEditForm} />
@@ -246,7 +246,7 @@ export function AdminPanel() {
             <button
               type="button"
               onClick={saveEdit}
-              className="rounded-lg bg-teal-600 px-4 py-2 text-sm text-white hover:bg-teal-500"
+              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm text-white hover:bg-emerald-500"
             >
               Save changes
             </button>
@@ -276,14 +276,14 @@ export function AdminPanel() {
             <tbody>
               {bundle.projects.map((p) => (
                 <tr key={p.project_id} className="border-b border-white/5">
-                  <td className="p-2 font-mono text-xs text-teal-400">{p.project_id}</td>
+                  <td className="p-2 font-mono text-xs text-emerald-400">{p.project_id}</td>
                   <td className="p-2 text-zinc-300">{p.project_name}</td>
                   <td className="p-2 text-zinc-500">{p.status}</td>
                   <td className="p-2 text-right">
                     <button
                       type="button"
                       onClick={() => startEdit(p)}
-                      className="mr-2 text-teal-400 hover:underline"
+                      className="mr-2 text-emerald-400 hover:underline"
                     >
                       Edit
                     </button>

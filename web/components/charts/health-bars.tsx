@@ -39,7 +39,7 @@ export function HealthBars({ projects }: { projects: ProjectRow[] }) {
             contentStyle={{ background: "#18181b", border: "1px solid #27272a" }}
             labelStyle={{ color: "#e4e4e7" }}
           />
-          <Bar dataKey="count" fill="#5eead4" radius={[4, 4, 0, 0]} name="Projects" />
+          <Bar dataKey="count" fill="#34d399" radius={[4, 4, 0, 0]} name="Projects" />
         </BarChart>
       </ResponsiveContainer>
     </div>

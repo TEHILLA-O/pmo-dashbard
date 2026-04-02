@@ -21,13 +21,23 @@ export type ProjectRow = {
 };
 
 export type MilestoneRow = {
+  milestone_id?: string;
+  project_id?: string;
+  milestone_name?: string;
+  due_date?: string | null;
+  completed_date?: string | null;
+  status?: string;
   overdue_flag?: number;
   [key: string]: unknown;
 };
 
 export type ResourceRow = {
+  resource_id?: string;
   resource_name?: string;
+  project_id?: string;
+  role?: string;
   allocation_percent?: number;
+  available_capacity_percent?: number;
   [key: string]: unknown;
 };
 

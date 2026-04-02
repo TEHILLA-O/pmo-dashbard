@@ -34,7 +34,7 @@ export function BudgetActualBars({ projects, limit = 12 }: { projects: ProjectRo
           <Tooltip {...chartTooltip} />
           <Legend wrapperStyle={{ fontSize: 12, color: "#a1a1aa" }} />
           <Bar dataKey="budget" fill="#6366f1" name="Budget (m)" radius={[2, 2, 0, 0]} />
-          <Bar dataKey="spend" fill="#5eead4" name="Spend (m)" radius={[2, 2, 0, 0]} />
+          <Bar dataKey="spend" fill="#34d399" name="Spend (m)" radius={[2, 2, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -9,6 +9,14 @@ import type {
 } from "@/lib/types";
 import { recalculateAllProjects } from "@/lib/health";
 import {
+  ensureMilestoneIds,
+  nextMilestoneId,
+  normalizeMilestoneRow,
+  syncProjectOverdueFromMilestones,
+  todayCompletedIso,
+  toDueIso,
+} from "@/lib/milestone-helpers";
+import {
   createContext,
   useCallback,
   useContext,
@@ -31,7 +39,9 @@ function cloneBundle(b: DataBundle): DataBundle {
 
 function seedBundle(): DataBundle {
   const b = cloneBundle(initialJson as DataBundle);
-  b.projects = recalculateAllProjects(b.projects);
+  const milestones = ensureMilestoneIds(b.milestones as MilestoneRow[]).map(normalizeMilestoneRow);
+  b.milestones = milestones;
+  b.projects = recalculateAllProjects(syncProjectOverdueFromMilestones(b.projects, milestones));
   return b;
 }
 
@@ -44,15 +54,35 @@ type WeeklyUpdateInput = {
   status_note?: string;
 };
 
+type ResourceInput = {
+  resource_name: string;
+  project_id: string;
+  role?: string;
+  allocation_percent: number;
+};
+
+type MilestoneInput = {
+  project_id: string;
+  milestone_name: string;
+  due_date: string;
+};
+
 type Ctx = {
   bundle: DataBundle;
   resetToSample: () => void;
   addProject: (row: Omit<ProjectRow, "project_id"> & { project_name: string }) => void;
   updateProject: (projectId: string, patch: Partial<ProjectRow>) => void;
   deleteProjects: (projectIds: string[]) => void;
+  addResource: (input: ResourceInput) => void;
+  updateResource: (resourceId: string, patch: Partial<ResourceRow>) => void;
+  deleteResources: (resourceIds: string[]) => void;
   addWeeklyUpdate: (input: WeeklyUpdateInput) => void;
   updateWeeklyUpdate: (updateId: string, patch: Partial<WeeklyUpdateInput>) => void;
   deleteWeeklyUpdates: (updateIds: string[]) => void;
+  addMilestone: (input: MilestoneInput) => void;
+  updateMilestone: (milestoneId: string, patch: Partial<MilestoneRow>) => void;
+  markMilestoneComplete: (milestoneId: string) => void;
+  deleteMilestones: (milestoneIds: string[]) => void;
 };
 
 const PortfolioContext = createContext<Ctx | null>(null);
@@ -71,6 +101,36 @@ function parsePrjIndex(pid: string): number {
   return m ? parseInt(m[1], 10) : 0;
 }
 
+function prjSegmentForResourceId(projectId: string): string {
+  const m = /^PRJ-(\d+)$/i.exec(String(projectId).trim());
+  return m ? m[1].padStart(3, "0") : "000";
+}
+
+function nextResourceId(resources: ResourceRow[], projectId: string): string {
+  const seg = prjSegmentForResourceId(projectId);
+  const prefix = `RES-${seg}-`;
+  let maxSeq = 0;
+  for (const r of resources) {
+    const id = String(r.resource_id ?? "").trim();
+    if (!id.startsWith(prefix)) continue;
+    const rest = id.slice(prefix.length);
+    const n = parseInt(rest, 10);
+    if (!Number.isNaN(n)) maxSeq = Math.max(maxSeq, n);
+  }
+  return `${prefix}${String(maxSeq + 1).padStart(2, "0")}`;
+}
+
+function ensureResourceIds(resources: ResourceRow[]): ResourceRow[] {
+  return resources.map((r, i) => {
+    const rid = String(r.resource_id ?? "").trim();
+    if (rid) return { ...r };
+    return {
+      ...r,
+      resource_id: `RES-ORPHAN-${String(i).padStart(4, "0")}`,
+    };
+  });
+}
+
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const [bundle, setBundle] = useState<DataBundle>(seedBundle);
   const [hydrated, setHydrated] = useState(false);
@@ -81,10 +141,18 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       if (raw) {
         const parsed = JSON.parse(raw) as DataBundle;
         if (Array.isArray(parsed?.projects)) {
+          const rawMs = Array.isArray(parsed.milestones) ? (parsed.milestones as MilestoneRow[]) : [];
+          const milestones = ensureMilestoneIds(rawMs).map(normalizeMilestoneRow);
+          const mergedProjects = syncProjectOverdueFromMilestones(
+            parsed.projects as ProjectRow[],
+            milestones
+          );
           const merged: DataBundle = {
-            projects: recalculateAllProjects(parsed.projects as ProjectRow[]),
-            milestones: Array.isArray(parsed.milestones) ? parsed.milestones : [],
-            resources: Array.isArray(parsed.resources) ? parsed.resources : [],
+            projects: recalculateAllProjects(mergedProjects),
+            milestones,
+            resources: Array.isArray(parsed.resources)
+              ? ensureResourceIds(parsed.resources as ResourceRow[])
+              : [],
             weekly_updates: Array.isArray(parsed.weekly_updates)
               ? (parsed.weekly_updates as WeeklyUpdateRow[])
               : [],
@@ -192,17 +260,79 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
   const deleteProjects = useCallback((projectIds: string[]) => {
     const set = new Set(projectIds);
-    setBundle((prev) => ({
-      projects: recalculateAllProjects(prev.projects.filter((p) => !set.has(p.project_id))),
-      milestones: prev.milestones.filter(
+    setBundle((prev) => {
+      const milestones = prev.milestones.filter(
         (m) => !set.has(String((m as MilestoneRow).project_id ?? ""))
-      ),
-      resources: prev.resources.filter(
-        (r) => !set.has(String((r as ResourceRow).project_id ?? ""))
-      ),
-      weekly_updates: prev.weekly_updates.filter(
-        (w) => !set.has(String(w.project_id ?? ""))
-      ),
+      );
+      const projects = recalculateAllProjects(
+        syncProjectOverdueFromMilestones(
+          prev.projects.filter((p) => !set.has(p.project_id)),
+          milestones
+        )
+      );
+      return {
+        ...prev,
+        projects,
+        milestones,
+        resources: prev.resources.filter(
+          (r) => !set.has(String((r as ResourceRow).project_id ?? ""))
+        ),
+        weekly_updates: prev.weekly_updates.filter(
+          (w) => !set.has(String(w.project_id ?? ""))
+        ),
+      };
+    });
+  }, []);
+
+  const addResource = useCallback((input: ResourceInput) => {
+    const name = input.resource_name.trim();
+    const pid = input.project_id.trim();
+    if (!name || !pid) return;
+    const alloc = Math.min(200, Math.max(0, Number(input.allocation_percent)));
+    const avail = Math.max(0, 100 - alloc);
+    setBundle((prev) => {
+      const resource_id = nextResourceId(prev.resources, pid);
+      const row: ResourceRow = {
+        resource_id,
+        resource_name: name,
+        project_id: pid,
+        role: String(input.role ?? "").trim() || "—",
+        allocation_percent: alloc,
+        available_capacity_percent: avail,
+      };
+      return { ...prev, resources: [...prev.resources, row] };
+    });
+  }, []);
+
+  const updateResource = useCallback((resourceId: string, patch: Partial<ResourceRow>) => {
+    const rid = resourceId.trim();
+    if (!rid) return;
+    setBundle((prev) => ({
+      ...prev,
+      resources: prev.resources.map((r) => {
+        if (String(r.resource_id ?? "") !== rid) return r;
+        const next: ResourceRow = { ...r, ...patch, resource_id: rid };
+        if (patch.resource_name != null) next.resource_name = String(patch.resource_name).trim();
+        if (patch.project_id != null) next.project_id = String(patch.project_id).trim();
+        if (patch.role != null) next.role = String(patch.role).trim() || "—";
+        if (patch.allocation_percent != null) {
+          const alloc = Math.min(200, Math.max(0, Number(patch.allocation_percent)));
+          next.allocation_percent = alloc;
+          if (patch.available_capacity_percent === undefined) {
+            next.available_capacity_percent = Math.max(0, 100 - alloc);
+          }
+        }
+        return next;
+      }),
+    }));
+  }, []);
+
+  const deleteResources = useCallback((resourceIds: string[]) => {
+    const set = new Set(resourceIds.map((id) => id.trim()).filter(Boolean));
+    if (set.size === 0) return;
+    setBundle((prev) => ({
+      ...prev,
+      resources: prev.resources.filter((r) => !set.has(String(r.resource_id ?? ""))),
     }));
   }, []);
 
@@ -258,6 +388,84 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const addMilestone = useCallback((input: MilestoneInput) => {
+    const pid = input.project_id.trim();
+    const name = input.milestone_name.trim();
+    if (!pid || !name) return;
+    const ymd = input.due_date.trim().slice(0, 10);
+    if (ymd.length < 10) return;
+    setBundle((prev) => {
+      const milestone_id = nextMilestoneId(prev.milestones, pid);
+      let row: MilestoneRow = {
+        milestone_id,
+        project_id: pid,
+        milestone_name: name,
+        due_date: toDueIso(ymd),
+        completed_date: null,
+        status: "Upcoming",
+        overdue_flag: 0,
+      };
+      row = normalizeMilestoneRow(row);
+      const milestones = [...prev.milestones, row];
+      const projects = recalculateAllProjects(
+        syncProjectOverdueFromMilestones(prev.projects, milestones)
+      );
+      return { ...prev, milestones, projects };
+    });
+  }, []);
+
+  const updateMilestone = useCallback((milestoneId: string, patch: Partial<MilestoneRow>) => {
+    const mid = milestoneId.trim();
+    if (!mid) return;
+    setBundle((prev) => {
+      const milestones = prev.milestones.map((m) => {
+        if (String(m.milestone_id ?? "") !== mid) return m;
+        let next: MilestoneRow = { ...m, ...patch, milestone_id: mid };
+        if (patch.milestone_name != null) next.milestone_name = String(patch.milestone_name).trim();
+        if (patch.project_id != null) next.project_id = String(patch.project_id).trim();
+        if (patch.due_date != null) {
+          const d = String(patch.due_date);
+          next.due_date = d.includes("T") ? d : toDueIso(d.slice(0, 10));
+        }
+        if (patch.completed_date !== undefined) {
+          const c = patch.completed_date;
+          if (c == null || String(c).trim() === "") {
+            next.completed_date = null;
+            next.status = "Upcoming";
+          } else {
+            next.completed_date = String(c);
+            next.status = "Completed";
+            next.overdue_flag = 0;
+          }
+        }
+        return normalizeMilestoneRow(next);
+      });
+      const projects = recalculateAllProjects(
+        syncProjectOverdueFromMilestones(prev.projects, milestones)
+      );
+      return { ...prev, milestones, projects };
+    });
+  }, []);
+
+  const markMilestoneComplete = useCallback(
+    (milestoneId: string) => {
+      updateMilestone(milestoneId, { completed_date: todayCompletedIso() });
+    },
+    [updateMilestone]
+  );
+
+  const deleteMilestones = useCallback((milestoneIds: string[]) => {
+    const set = new Set(milestoneIds.map((x) => x.trim()).filter(Boolean));
+    if (set.size === 0) return;
+    setBundle((prev) => {
+      const milestones = prev.milestones.filter((m) => !set.has(String(m.milestone_id ?? "")));
+      const projects = recalculateAllProjects(
+        syncProjectOverdueFromMilestones(prev.projects, milestones)
+      );
+      return { ...prev, milestones, projects };
+    });
+  }, []);
+
   const value = useMemo(
     () => ({
       bundle,
@@ -265,9 +473,16 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       addProject,
       updateProject,
       deleteProjects,
+      addResource,
+      updateResource,
+      deleteResources,
       addWeeklyUpdate,
       updateWeeklyUpdate,
       deleteWeeklyUpdates,
+      addMilestone,
+      updateMilestone,
+      markMilestoneComplete,
+      deleteMilestones,
     }),
     [
       bundle,
@@ -275,9 +490,16 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       addProject,
       updateProject,
       deleteProjects,
+      addResource,
+      updateResource,
+      deleteResources,
       addWeeklyUpdate,
       updateWeeklyUpdate,
       deleteWeeklyUpdates,
+      addMilestone,
+      updateMilestone,
+      markMilestoneComplete,
+      deleteMilestones,
     ]
   );
 

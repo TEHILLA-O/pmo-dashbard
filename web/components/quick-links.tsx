@@ -3,6 +3,7 @@ import Link from "next/link";
 const LINKS = [
   { href: "/executive", label: "Executive Overview" },
   { href: "/portfolio", label: "Portfolio View" },
+  { href: "/milestones", label: "Milestones" },
   { href: "/risk", label: "Risk & Health" },
   { href: "/resources", label: "Resources" },
   { href: "/prioritization", label: "Prioritization" },
@@ -20,7 +21,7 @@ export function QuickLinks() {
           <Link
             key={href}
             href={href}
-            className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-center text-sm text-zinc-300 transition hover:border-teal-500/40 hover:bg-teal-500/10 hover:text-teal-100"
+            className="quick-link-tile rounded-xl border border-white/12 bg-white/[0.06] px-4 py-3 text-center text-sm text-zinc-300 backdrop-blur-sm hover:border-violet-400/35 hover:bg-violet-500/[0.12] hover:text-violet-50"
           >
             {label}
           </Link>

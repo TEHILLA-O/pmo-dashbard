@@ -17,7 +17,7 @@ import { chartGrid, chartTooltip } from "./chart-styles";
 const PRIORITY_COLOR: Record<string, string> = {
   High: "#f87171",
   Medium: "#fbbf24",
-  Low: "#5eead4",
+  Low: "#34d399",
 };
 
 export function StrategicRoiScatter({ projects }: { projects: ProjectRow[] }) {

@@ -39,7 +39,7 @@ export function HealthRankLine({ projects }: { projects: ProjectRow[] }) {
               return id ? `${id} (rank ${label})` : String(label);
             }}
           />
-          <Line type="monotone" dataKey="health" stroke="#5eead4" strokeWidth={2} dot={{ r: 3, fill: "#5eead4" }} name="Health" />
+          <Line type="monotone" dataKey="health" stroke="#34d399" strokeWidth={2} dot={{ r: 3, fill: "#34d399" }} name="Health" />
         </LineChart>
       </ResponsiveContainer>
     </div>

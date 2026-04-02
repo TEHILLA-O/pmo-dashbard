@@ -10,7 +10,7 @@ import {
 } from "recharts";
 
 const COLORS: Record<string, string> = {
-  "On Track": "#2dd4bf",
+  "On Track": "#34d399",
   "At Risk": "#fbbf24",
   Delayed: "#f87171",
 };

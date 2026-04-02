@@ -34,7 +34,7 @@ export function PortfolioExportToolbar() {
             setZipping(false);
           }
         }}
-        className="rounded-lg border border-teal-500/40 bg-teal-500/15 px-3 py-2 text-xs font-medium text-teal-100 hover:bg-teal-500/25 disabled:opacity-50"
+        className="rounded-lg border border-emerald-500/40 bg-emerald-500/15 px-3 py-2 text-xs font-medium text-emerald-100 hover:bg-emerald-500/25 disabled:opacity-50"
         title="ZIP: projects, milestones, resources, weekly_updates"
       >
         {zipping ? "Building ZIP…" : "Download full portfolio (ZIP)"}
@@ -54,7 +54,7 @@ export function ExportProjectCsvButton({ projectId }: { projectId: string }) {
     <button
       type="button"
       onClick={() => downloadCsv(safeProjectFilename(p.project_id), singleProjectToCsv(p))}
-      className="text-xs text-teal-400 hover:text-teal-300 hover:underline"
+      className="text-xs text-emerald-400 hover:text-emerald-300 hover:underline"
     >
       CSV
     </button>

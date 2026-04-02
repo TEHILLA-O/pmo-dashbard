@@ -35,7 +35,7 @@ export function WeeklyVolumeChart({ updates }: { updates: WeeklyUpdateRow[] }) {
           <XAxis dataKey="week" tick={{ fill: "#a1a1aa", fontSize: 9 }} angle={-40} textAnchor="end" height={55} interval={0} />
           <YAxis allowDecimals={false} tick={{ fill: "#a1a1aa", fontSize: 11 }} />
           <Tooltip {...chartTooltip} />
-          <Bar dataKey="count" fill="#2dd4bf" name="Updates" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="count" fill="#34d399" name="Updates" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

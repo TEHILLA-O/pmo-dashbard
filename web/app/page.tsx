@@ -2,6 +2,7 @@
 
 import { BudgetActualBars } from "@/components/charts/budget-actual-bars";
 import { HealthBars } from "@/components/charts/health-bars";
+import { ProjectTimelineBars } from "@/components/charts/project-timeline-bars";
 import { StatusDonut } from "@/components/charts/status-donut";
 import { HomeProjectList } from "@/components/home-project-list";
 import { KpiGrid } from "@/components/kpi-grid";
@@ -45,6 +46,16 @@ export default function HomePage() {
       </div>
 
       <HomeProjectList />
+
+      <div className="glass-card rounded-2xl p-5">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+          Project timeline (start → end)
+        </p>
+        <p className="mb-3 text-[11px] text-zinc-600">
+          Up to 14 programmes with the earliest starts shown at the top; hover a bar for exact dates.
+        </p>
+        <ProjectTimelineBars projects={bundle.projects} limit={14} />
+      </div>
 
       <div className="glass-card rounded-2xl p-5">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">

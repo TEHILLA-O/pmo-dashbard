@@ -20,7 +20,7 @@ export function HomeProjectList() {
         </div>
         <Link
           href="/portfolio"
-          className="text-xs font-medium text-teal-400 hover:text-teal-300 hover:underline"
+          className="text-xs font-medium text-emerald-400 transition-colors duration-200 hover:text-emerald-200 hover:underline underline-offset-4"
         >
           Open full portfolio view →
         </Link>
@@ -35,10 +35,10 @@ export function HomeProjectList() {
           {projects.map((p) => (
             <li
               key={p.project_id}
-              className="flex flex-col gap-1 py-3 first:pt-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+              className="project-row flex flex-col gap-1 py-3 first:pt-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
             >
               <div className="min-w-0">
-                <span className="font-mono text-xs text-teal-400">{p.project_id}</span>
+                <span className="font-mono text-xs text-emerald-400">{p.project_id}</span>
                 <p className="mt-0.5 truncate text-sm text-zinc-200" title={p.project_name}>
                   {p.project_name}
                 </p>

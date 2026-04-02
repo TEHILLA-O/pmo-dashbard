@@ -38,7 +38,7 @@ export function KpiGrid({ k }: { k: ExecutiveKpis }) {
       {rows.map((row, i) => (
         <div key={i} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {row.map(([label, val]) => (
-            <div key={label} className="glass-card rounded-xl p-4">
+            <div key={label} className="glass-card glass-tile rounded-xl p-4">
               <p className="text-[11px] uppercase tracking-wide text-zinc-500">{label}</p>
               <p className="mt-1 font-[family-name:var(--font-instrument)] text-2xl text-zinc-100">{val}</p>
             </div>
