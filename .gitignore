@@ -17,6 +17,10 @@ env/
 .DS_Store
 Thumbs.db
 
+# Node (Vercel landing build)
+node_modules/
+dist/
+
 # Test / coverage
 .pytest_cache/
 .coverage

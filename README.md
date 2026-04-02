@@ -27,15 +27,16 @@ Optional: add secrets in the Cloud dashboard under **App settings → Secrets** 
 
 ## Deploy the landing page (Vercel)
 
-The folder `landing/` is a static site that links visitors to your Streamlit deployment.
+The folder `landing/` is a static site that links visitors to your Streamlit deployment. Because `requirements.txt` lives at the repo root for Streamlit Cloud, Vercel would otherwise try to run the **Python** builder and fail. This repo includes **`vercel.json`** + **`package.json`**: `npm run build` copies `landing/` → `dist/`, and Vercel publishes **`dist/`** as a static site.
 
-1. Push this repository to GitHub (same repo as the app is fine).
-2. Import the project in [Vercel](https://vercel.com) from GitHub.
-3. **Settings → General → Root Directory** → set to `landing` (not the repo root).
-4. Framework Preset: **Other** (no build needed).
-5. Deploy.
+1. Push this repository to GitHub.
+2. Import the project in [Vercel](https://vercel.com) from GitHub (use the **repository root** — do not set Root Directory to `landing` unless you remove the Node build).
+3. Leave defaults so **Build Command** is `npm run build` and **Output Directory** is `dist` (from `vercel.json`), or confirm they match after import.
+4. Deploy.
 
-**Before or after the first deploy:** edit `landing/index.html` and replace the Streamlit URL in the main “Open dashboard” button (`href="..."`) with your real URL from Streamlit Cloud (for example `https://your-app.streamlit.app`).
+**Optional:** If you prefer no Node step, set **Root Directory** to `landing` only and remove/ignore the root `vercel.json` build — then use Framework **Other** with no build.
+
+**Before or after the first deploy:** edit `landing/index.html` and set the Streamlit URL and GitHub link in the buttons.
 
 ## Repository layout
 
