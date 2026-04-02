@@ -1,0 +1,12 @@
+# Optional: Render Blueprint — https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: pmo-dashboard
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"

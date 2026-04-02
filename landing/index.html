@@ -165,23 +165,24 @@
       <h1>PMO intelligence, <em>one click away</em></h1>
       <p class="lead">
         Executive overview, risk and health, resource allocation, prioritisation, weekly status, and
-        data admin — hosted on Streamlit Cloud.
+        data admin — one container, your host (Render, Railway, Fly, etc.). No Streamlit Cloud login
+        required for visitors.
       </p>
 
       <div class="card">
         <p>
-          Replace the button link below with your Streamlit Cloud URL after you deploy the app from
-          this same GitHub repository.
+          Point the button below to your public dashboard URL after you deploy the Docker image from
+          this repository (see README).
         </p>
         <div class="actions">
-          <!-- CONFIG: set href to your Streamlit app, e.g. https://your-app.streamlit.app -->
-          <a class="btn btn-primary" href="https://YOUR-APP-NAME.streamlit.app" rel="noopener noreferrer">
+          <!-- CONFIG: your deployed app URL, e.g. https://pmo-dashboard.onrender.com -->
+          <a class="btn btn-primary" href="https://YOUR-DASHBOARD-URL.example.com" rel="noopener noreferrer">
             Open dashboard
             <span aria-hidden="true">→</span>
           </a>
           <a
             class="btn btn-ghost"
-            href="https://github.com/YOUR_USER/YOUR_REPO"
+            href="https://github.com/TEHILLA-O/pmo-dashbard"
             rel="noopener noreferrer"
           >
             View on GitHub
@@ -190,9 +191,8 @@
       </div>
 
       <p class="footer">
-        Vercel project <strong>Root Directory</strong> should be <code>landing</code>. The Streamlit
-        app deploys from the repository root on Streamlit Community Cloud with main file
-        <code>app.py</code>.
+        Static landing on Vercel (optional): repo root + <code>npm run build</code> → <code>dist/</code>.
+        Live app: deploy <code>Dockerfile</code> anywhere containers run — not on Streamlit Community Cloud.
       </p>
     </div>
   </body>

@@ -1,0 +1,8 @@
+# Local smoke test — same image as production
+services:
+  pmo:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      PORT: "8501"

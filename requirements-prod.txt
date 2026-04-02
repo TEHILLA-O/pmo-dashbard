@@ -1,0 +1,7 @@
+# Production image (Docker) — no test deps
+streamlit>=1.30.0
+pandas
+numpy
+plotly
+openpyxl
+reportlab
