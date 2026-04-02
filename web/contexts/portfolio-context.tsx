@@ -1,6 +1,12 @@
 "use client";
 
-import type { DataBundle, MilestoneRow, ProjectRow, ResourceRow } from "@/lib/types";
+import type {
+  DataBundle,
+  MilestoneRow,
+  ProjectRow,
+  ResourceRow,
+  WeeklyUpdateRow,
+} from "@/lib/types";
 import { recalculateAllProjects } from "@/lib/health";
 import {
   createContext,
@@ -29,12 +35,24 @@ function seedBundle(): DataBundle {
   return b;
 }
 
+type WeeklyUpdateInput = {
+  project_id: string;
+  reporting_week: string;
+  key_achievement: string;
+  blocker: string;
+  next_step: string;
+  status_note?: string;
+};
+
 type Ctx = {
   bundle: DataBundle;
   resetToSample: () => void;
   addProject: (row: Omit<ProjectRow, "project_id"> & { project_name: string }) => void;
   updateProject: (projectId: string, patch: Partial<ProjectRow>) => void;
   deleteProjects: (projectIds: string[]) => void;
+  addWeeklyUpdate: (input: WeeklyUpdateInput) => void;
+  updateWeeklyUpdate: (updateId: string, patch: Partial<WeeklyUpdateInput>) => void;
+  deleteWeeklyUpdates: (updateIds: string[]) => void;
 };
 
 const PortfolioContext = createContext<Ctx | null>(null);
@@ -67,7 +85,9 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             projects: recalculateAllProjects(parsed.projects as ProjectRow[]),
             milestones: Array.isArray(parsed.milestones) ? parsed.milestones : [],
             resources: Array.isArray(parsed.resources) ? parsed.resources : [],
-            weekly_updates: Array.isArray(parsed.weekly_updates) ? parsed.weekly_updates : [],
+            weekly_updates: Array.isArray(parsed.weekly_updates)
+              ? (parsed.weekly_updates as WeeklyUpdateRow[])
+              : [],
           };
           setBundle(merged);
         }
@@ -181,8 +201,60 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         (r) => !set.has(String((r as ResourceRow).project_id ?? ""))
       ),
       weekly_updates: prev.weekly_updates.filter(
-        (w) => !set.has(String((w as { project_id?: string }).project_id ?? ""))
+        (w) => !set.has(String(w.project_id ?? ""))
       ),
+    }));
+  }, []);
+
+  const addWeeklyUpdate = useCallback((input: WeeklyUpdateInput) => {
+    const reporting =
+      input.reporting_week.length === 10
+        ? `${input.reporting_week}T00:00:00.000`
+        : input.reporting_week;
+    const row: WeeklyUpdateRow = {
+      update_id: `UPD-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      project_id: input.project_id.trim(),
+      reporting_week: reporting,
+      key_achievement: input.key_achievement.trim(),
+      blocker: input.blocker.trim(),
+      next_step: input.next_step.trim(),
+      status_note: (input.status_note ?? "").trim() || undefined,
+    };
+    setBundle((prev) => ({
+      ...prev,
+      weekly_updates: [...prev.weekly_updates, row],
+    }));
+  }, []);
+
+  const updateWeeklyUpdate = useCallback((updateId: string, patch: Partial<WeeklyUpdateInput>) => {
+    setBundle((prev) => ({
+      ...prev,
+      weekly_updates: prev.weekly_updates.map((w) => {
+        if (w.update_id !== updateId) return w;
+        const next = { ...w };
+        if (patch.project_id != null) next.project_id = patch.project_id.trim();
+        if (patch.reporting_week != null) {
+          next.reporting_week =
+            patch.reporting_week.length === 10
+              ? `${patch.reporting_week}T00:00:00.000`
+              : patch.reporting_week;
+        }
+        if (patch.key_achievement != null) next.key_achievement = patch.key_achievement.trim();
+        if (patch.blocker != null) next.blocker = patch.blocker.trim();
+        if (patch.next_step != null) next.next_step = patch.next_step.trim();
+        if (patch.status_note !== undefined) {
+          next.status_note = patch.status_note.trim() || undefined;
+        }
+        return next;
+      }),
+    }));
+  }, []);
+
+  const deleteWeeklyUpdates = useCallback((updateIds: string[]) => {
+    const set = new Set(updateIds);
+    setBundle((prev) => ({
+      ...prev,
+      weekly_updates: prev.weekly_updates.filter((w) => !set.has(w.update_id)),
     }));
   }, []);
 
@@ -193,8 +265,20 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       addProject,
       updateProject,
       deleteProjects,
+      addWeeklyUpdate,
+      updateWeeklyUpdate,
+      deleteWeeklyUpdates,
     }),
-    [bundle, resetToSample, addProject, updateProject, deleteProjects]
+    [
+      bundle,
+      resetToSample,
+      addProject,
+      updateProject,
+      deleteProjects,
+      addWeeklyUpdate,
+      updateWeeklyUpdate,
+      deleteWeeklyUpdates,
+    ]
   );
 
   return <PortfolioContext.Provider value={value}>{children}</PortfolioContext.Provider>;

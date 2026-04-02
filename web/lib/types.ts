@@ -31,11 +31,22 @@ export type ResourceRow = {
   [key: string]: unknown;
 };
 
+export type WeeklyUpdateRow = {
+  update_id: string;
+  project_id: string;
+  reporting_week: string;
+  key_achievement: string;
+  blocker: string;
+  next_step: string;
+  status_note?: string;
+  [key: string]: unknown;
+};
+
 export type DataBundle = {
   projects: ProjectRow[];
   milestones: MilestoneRow[];
   resources: ResourceRow[];
-  weekly_updates: Record<string, unknown>[];
+  weekly_updates: WeeklyUpdateRow[];
 };
 
 export type ExecutiveKpis = {
