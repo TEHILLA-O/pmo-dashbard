@@ -1,10 +1,11 @@
-import { RiskScatter } from "@/components/charts/risk-scatter";
-import type { DataBundle } from "@/lib/types";
-import bundleJson from "@/data/bundle.json";
+"use client";
 
-const bundle = bundleJson as DataBundle;
+import { RiskScatter } from "@/components/charts/risk-scatter";
+import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function RiskPage() {
+  const { bundle } = usePortfolio();
+
   return (
     <div className="mx-auto max-w-6xl space-y-8">
       <div>

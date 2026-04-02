@@ -1,10 +1,9 @@
+"use client";
+
 import { HealthBars } from "@/components/charts/health-bars";
 import { StatusDonut } from "@/components/charts/status-donut";
-import type { DataBundle } from "@/lib/types";
+import { usePortfolio } from "@/contexts/portfolio-context";
 import { getBundleKpis } from "@/lib/metrics";
-import bundleJson from "@/data/bundle.json";
-
-const bundle = bundleJson as DataBundle;
 
 function fmt(n: number, digits = 1): string {
   if (!Number.isFinite(n)) return "—";
@@ -12,6 +11,7 @@ function fmt(n: number, digits = 1): string {
 }
 
 export default function ExecutivePage() {
+  const { bundle } = usePortfolio();
   const k = getBundleKpis(bundle);
   const remWork = Math.max(0, 100 - k.budget_weighted_pct_complete);
   const cpiTxt =

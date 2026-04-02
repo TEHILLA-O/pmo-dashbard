@@ -6,6 +6,8 @@ GitHub: [TEHILLA-O/pmo-dashbard](https://github.com/TEHILLA-O/pmo-dashbard)
 
 The **Next.js** app in **`web/`** is a full static dashboard (home, executive charts, portfolio table, risk, resources, etc.). It loads bundled JSON generated from the same sample data pipeline as the Python utilities.
 
+**Editing data:** open **Data / Admin** in the app to add, edit, or delete projects. Changes are stored in the browser (**localStorage**) only — there is no server database on Vercel. Use **Reset to sample data** to restore the shipped JSON. To change the default dataset for everyone, run `python scripts/export_bundle_json.py`, commit `web/data/bundle.json`, and redeploy.
+
 ```bash
 cd web
 npm install

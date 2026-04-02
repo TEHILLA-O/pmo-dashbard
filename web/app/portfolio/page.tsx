@@ -1,9 +1,9 @@
-import type { DataBundle } from "@/lib/types";
-import bundleJson from "@/data/bundle.json";
+"use client";
 
-const bundle = bundleJson as DataBundle;
+import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function PortfolioPage() {
+  const { bundle } = usePortfolio();
   const rows = bundle.projects;
 
   return (

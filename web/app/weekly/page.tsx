@@ -1,16 +1,16 @@
-import type { DataBundle } from "@/lib/types";
-import bundleJson from "@/data/bundle.json";
+"use client";
 
-const bundle = bundleJson as DataBundle;
+import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function WeeklyPage() {
+  const { bundle } = usePortfolio();
   const rows = bundle.weekly_updates.slice(0, 40);
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div>
         <h1 className="font-[family-name:var(--font-instrument)] text-3xl text-white">Weekly Status Reports</h1>
-        <p className="mt-1 text-sm text-zinc-500">Recent weekly narrative updates (sample)</p>
+        <p className="mt-1 text-sm text-zinc-500">Recent weekly narrative updates</p>
       </div>
 
       <div className="space-y-4">

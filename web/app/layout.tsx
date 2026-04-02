@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Syne } from "next/font/google";
 import { DashboardShell } from "@/components/dashboard-shell";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const syne = Syne({
@@ -29,7 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${syne.variable} ${instrument.variable} font-sans antialiased`}>
-        <DashboardShell>{children}</DashboardShell>
+        <Providers>
+          <DashboardShell>{children}</DashboardShell>
+        </Providers>
       </body>
     </html>
   );

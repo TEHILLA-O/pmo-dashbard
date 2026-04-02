@@ -1,12 +1,12 @@
+"use client";
+
 import { KpiGrid } from "@/components/kpi-grid";
 import { QuickLinks } from "@/components/quick-links";
-import type { DataBundle } from "@/lib/types";
+import { usePortfolio } from "@/contexts/portfolio-context";
 import { getBundleKpis } from "@/lib/metrics";
-import bundleJson from "@/data/bundle.json";
-
-const bundle = bundleJson as DataBundle;
 
 export default function HomePage() {
+  const { bundle } = usePortfolio();
   const k = getBundleKpis(bundle);
 
   return (
@@ -16,7 +16,8 @@ export default function HomePage() {
           PMO Portfolio Intelligence Dashboard
         </h1>
         <p className="mt-2 text-sm text-zinc-500">
-          Enterprise portfolio governance and decision-support — runs on Vercel (no Streamlit).
+          Enterprise portfolio governance — add or edit projects under <strong className="text-zinc-400">Data / Admin</strong>{" "}
+          (saved in this browser).
         </p>
       </header>
 

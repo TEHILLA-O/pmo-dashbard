@@ -1,9 +1,9 @@
-import type { DataBundle } from "@/lib/types";
-import bundleJson from "@/data/bundle.json";
+"use client";
 
-const bundle = bundleJson as DataBundle;
+import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function PrioritizationPage() {
+  const { bundle } = usePortfolio();
   const sorted = [...bundle.projects].sort(
     (a, b) => Number(b.strategic_alignment_score ?? 0) - Number(a.strategic_alignment_score ?? 0)
   );
@@ -12,7 +12,7 @@ export default function PrioritizationPage() {
     <div className="mx-auto max-w-6xl space-y-6">
       <div>
         <h1 className="font-[family-name:var(--font-instrument)] text-3xl text-white">Prioritization</h1>
-        <p className="mt-1 text-sm text-zinc-500">Strategic alignment and scoring (sample)</p>
+        <p className="mt-1 text-sm text-zinc-500">Strategic alignment and scoring</p>
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-white/10">

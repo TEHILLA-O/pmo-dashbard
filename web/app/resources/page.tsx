@@ -1,16 +1,16 @@
-import type { DataBundle } from "@/lib/types";
-import bundleJson from "@/data/bundle.json";
+"use client";
 
-const bundle = bundleJson as DataBundle;
+import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function ResourcesPage() {
+  const { bundle } = usePortfolio();
   const rows = bundle.resources;
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div>
         <h1 className="font-[family-name:var(--font-instrument)] text-3xl text-white">Resource Allocation</h1>
-        <p className="mt-1 text-sm text-zinc-500">Named resource allocations (sample data)</p>
+        <p className="mt-1 text-sm text-zinc-500">Named resource allocations (sample data; add projects in Admin)</p>
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-white/10">

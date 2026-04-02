@@ -1,18 +1,19 @@
-import type { DataBundle } from "@/lib/types";
-import bundleJson from "@/data/bundle.json";
+"use client";
 
-const bundle = bundleJson as DataBundle;
+import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function PredictivePage() {
+  const { bundle } = usePortfolio();
   const avgHealth =
-    bundle.projects.reduce((s, p) => s + Number(p.health_score), 0) / Math.max(bundle.projects.length, 1);
+    bundle.projects.reduce((s, p) => s + Number(p.health_score), 0) /
+    Math.max(bundle.projects.length, 1);
   const atRisk = bundle.projects.filter((p) => p.status !== "On Track").length;
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <div>
         <h1 className="font-[family-name:var(--font-instrument)] text-3xl text-white">Predictive Analytics</h1>
-        <p className="mt-1 text-sm text-zinc-500">Lightweight portfolio signals (static demo)</p>
+        <p className="mt-1 text-sm text-zinc-500">Lightweight portfolio signals</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -30,11 +31,6 @@ export default function PredictivePage() {
           <p className="mt-1 text-xs text-zinc-500">Not on track</p>
         </div>
       </div>
-
-      <p className="text-sm text-zinc-500">
-        Full ML-style forecasting lived in the Streamlit version; this build keeps a simple read-only
-        snapshot suitable for edge deployment.
-      </p>
     </div>
   );
 }
