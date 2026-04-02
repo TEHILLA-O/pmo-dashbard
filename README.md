@@ -13,7 +13,9 @@ npm run build   # production check
 npm run dev     # http://localhost:3000
 ```
 
-**Vercel:** import this repo and set **Root Directory** to **`web`**. Vercel will detect Next.js and deploy automatically.
+**Vercel (repo root — works with Python files in the same repo):** leave **Root Directory** empty (`.`). Root **`vercel.json`** runs `cd web && npm ci && npm run build` and publishes **`web/out`** (Next static export). If builds still pick Python, set **Framework Preset** to **Other** in Project Settings.
+
+**Vercel (alternative):** set **Root Directory** to **`web`** and use the default Next.js preset (no root `vercel.json` needed for that layout).
 
 **Refresh data:** from the repository root (Python env with `pandas` etc.):
 

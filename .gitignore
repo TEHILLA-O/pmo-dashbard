@@ -21,6 +21,7 @@ Thumbs.db
 node_modules/
 web/node_modules/
 web/.next/
+web/out/
 dist/
 
 # Test / coverage

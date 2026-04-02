@@ -1,0 +1,5 @@
+{
+  "name": "pmo-dashbard",
+  "private": true,
+  "description": "Vercel uses vercel.json to build web/ (Next.js static export). Python/Streamlit stays in repo root for local/Docker."
+}
