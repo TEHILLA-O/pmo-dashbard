@@ -1,5 +1,6 @@
 "use client";
 
+import { ExportProjectCsvButton, PortfolioExportToolbar } from "@/components/portfolio-export-toolbar";
 import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function PortfolioPage() {
@@ -8,13 +9,16 @@ export default function PortfolioPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">
-      <div>
-        <h1 className="font-[family-name:var(--font-instrument)] text-3xl text-white">Portfolio View</h1>
-        <p className="mt-1 text-sm text-zinc-500">Project register and delivery snapshot</p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="font-[family-name:var(--font-instrument)] text-3xl text-white">Portfolio View</h1>
+          <p className="mt-1 text-sm text-zinc-500">Project register and delivery snapshot</p>
+        </div>
+        <PortfolioExportToolbar />
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-white/10">
-        <table className="w-full min-w-[900px] text-left text-sm">
+        <table className="w-full min-w-[960px] text-left text-sm">
           <thead>
             <tr className="border-b border-white/10 bg-white/5 text-xs uppercase tracking-wide text-zinc-500">
               <th className="p-3">ID</th>
@@ -24,6 +28,7 @@ export default function PortfolioPage() {
               <th className="p-3 text-right">% complete</th>
               <th className="p-3 text-right">Budget</th>
               <th className="p-3 text-right">Spend</th>
+              <th className="p-3 text-right">Export</th>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +44,9 @@ export default function PortfolioPage() {
                 </td>
                 <td className="p-3 text-right text-zinc-400">
                   {Number(p.actual_cost).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                </td>
+                <td className="p-3 text-right">
+                  <ExportProjectCsvButton projectId={p.project_id} />
                 </td>
               </tr>
             ))}

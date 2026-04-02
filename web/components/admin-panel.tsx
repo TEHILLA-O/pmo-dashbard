@@ -1,5 +1,6 @@
 "use client";
 
+import { PortfolioExportToolbar } from "@/components/portfolio-export-toolbar";
 import { usePortfolio } from "@/contexts/portfolio-context";
 import type { ProjectRow } from "@/lib/types";
 import { useMemo, useState } from "react";
@@ -75,6 +76,15 @@ export function AdminPanel() {
           Reset to sample data
         </button>
       </div>
+
+      <section className="glass-card space-y-3 rounded-2xl p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">Export</h2>
+        <p className="text-xs text-zinc-600">
+          Per-project CSV from <strong className="text-zinc-500">Portfolio View</strong> (row link). Below:
+          all projects as one CSV, or full portfolio as ZIP.
+        </p>
+        <PortfolioExportToolbar />
+      </section>
 
       <section className="glass-card space-y-4 rounded-2xl p-6">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-teal-400/90">Add project</h2>
