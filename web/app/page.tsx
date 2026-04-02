@@ -1,5 +1,6 @@
 "use client";
 
+import { HomeProjectList } from "@/components/home-project-list";
 import { KpiGrid } from "@/components/kpi-grid";
 import { QuickLinks } from "@/components/quick-links";
 import { usePortfolio } from "@/contexts/portfolio-context";
@@ -28,6 +29,8 @@ export default function HomePage() {
       </p>
 
       <QuickLinks />
+
+      <HomeProjectList />
 
       <KpiGrid k={k} />
 
