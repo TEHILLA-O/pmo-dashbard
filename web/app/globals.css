@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-deep: #0a0c10;
+  --bg-panel: #121826;
+  --accent: #5eead4;
+}
+
+body {
+  color: #e8ecf4;
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, #1a2332 0%, var(--bg-deep) 45%),
+    linear-gradient(165deg, var(--bg-deep) 0%, var(--bg-panel) 100%);
+  min-height: 100vh;
+  font-family: var(--font-syne), system-ui, sans-serif;
+}
+
+.glass-sidebar {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

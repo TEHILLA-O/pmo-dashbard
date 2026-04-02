@@ -17,8 +17,10 @@ env/
 .DS_Store
 Thumbs.db
 
-# Node (Vercel landing build)
+# Node / Next (web/)
 node_modules/
+web/node_modules/
+web/.next/
 dist/
 
 # Test / coverage
