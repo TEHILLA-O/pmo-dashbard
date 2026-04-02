@@ -1,5 +1,7 @@
 # PMO Portfolio Intelligence Dashboard
 
+GitHub: [TEHILLA-O/pmo-dashbard](https://github.com/TEHILLA-O/pmo-dashbard)
+
 Streamlit app for portfolio governance: executive KPIs, risk, resources, prioritization, weekly status, exports, and admin data upload.
 
 ## Run locally
