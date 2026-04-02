@@ -1,5 +1,7 @@
 "use client";
 
+import { BudgetActualBars } from "@/components/charts/budget-actual-bars";
+import { ProgressBarsHorizontal } from "@/components/charts/progress-bars-h";
 import { ExportProjectCsvButton, PortfolioExportToolbar } from "@/components/portfolio-export-toolbar";
 import { usePortfolio } from "@/contexts/portfolio-context";
 
@@ -15,6 +17,21 @@ export default function PortfolioPage() {
           <p className="mt-1 text-sm text-zinc-500">Project register and delivery snapshot</p>
         </div>
         <PortfolioExportToolbar />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Progress: planned vs actual
+          </p>
+          <ProgressBarsHorizontal projects={rows} limit={12} />
+        </div>
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Budget vs spend (£m)
+          </p>
+          <BudgetActualBars projects={rows} limit={10} />
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-white/10">

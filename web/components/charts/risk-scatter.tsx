@@ -20,8 +20,8 @@ export function RiskScatter({ projects }: { projects: ProjectRow[] }) {
   }));
 
   return (
-    <div className="h-[320px] w-full">
-      <ResponsiveContainer>
+    <div className="h-[320px] w-full min-w-0">
+      <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={{ top: 16, right: 16, bottom: 8, left: 8 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
           <XAxis type="number" dataKey="x" name="Probability" domain={[0, 6]} tick={{ fill: "#a1a1aa", fontSize: 11 }} />

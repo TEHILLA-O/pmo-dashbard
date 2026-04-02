@@ -29,8 +29,8 @@ export function HealthBars({ projects }: { projects: ProjectRow[] }) {
   }
 
   return (
-    <div className="h-[260px] w-full">
-      <ResponsiveContainer>
+    <div className="h-[260px] w-full min-w-0">
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart data={bins}>
           <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
           <XAxis dataKey="range" tick={{ fill: "#a1a1aa", fontSize: 11 }} />

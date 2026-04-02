@@ -1,5 +1,6 @@
 "use client";
 
+import { WeeklyVolumeChart } from "@/components/charts/weekly-volume-chart";
 import { usePortfolio } from "@/contexts/portfolio-context";
 import type { WeeklyUpdateRow } from "@/lib/types";
 import { useMemo, useState } from "react";
@@ -53,6 +54,15 @@ export function WeeklyReportsPanel() {
           {showAdd ? "Close form" : "Add weekly update"}
         </button>
       </div>
+
+      {bundle.weekly_updates.length > 0 && (
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Updates by reporting week
+          </p>
+          <WeeklyVolumeChart updates={bundle.weekly_updates} />
+        </div>
+      )}
 
       {!firstProjectId && (
         <p className="text-sm text-amber-400/90">

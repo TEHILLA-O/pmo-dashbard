@@ -31,8 +31,8 @@ export function StatusDonut({
   ].filter((d) => d.value > 0);
 
   return (
-    <div className="h-[280px] w-full">
-      <ResponsiveContainer>
+    <div className="h-[280px] w-full min-w-0">
+      <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}

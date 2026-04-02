@@ -1,7 +1,10 @@
 "use client";
 
+import { HealthBars } from "@/components/charts/health-bars";
+import { StatusDonut } from "@/components/charts/status-donut";
 import { PortfolioExportToolbar } from "@/components/portfolio-export-toolbar";
 import { usePortfolio } from "@/contexts/portfolio-context";
+import { getBundleKpis } from "@/lib/metrics";
 import type { ProjectRow } from "@/lib/types";
 import { useMemo, useState } from "react";
 
@@ -34,6 +37,7 @@ const emptyForm = () => ({
 
 export function AdminPanel() {
   const { bundle, resetToSample, addProject, updateProject, deleteProjects } = usePortfolio();
+  const k = getBundleKpis(bundle);
   const [addForm, setAddForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<ProjectRow>>({});
@@ -85,6 +89,25 @@ export function AdminPanel() {
         </p>
         <PortfolioExportToolbar />
       </section>
+
+      {bundle.projects.length > 0 && (
+        <section className="glass-card space-y-4 rounded-2xl p-6">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">Live portfolio charts</h2>
+          <p className="text-xs text-zinc-600">
+            Reflects current session data (including your edits below).
+          </p>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div>
+              <p className="mb-2 text-[11px] uppercase tracking-wide text-zinc-600">Status mix</p>
+              <StatusDonut onTrack={k.on_track} atRisk={k.at_risk} delayed={k.delayed} />
+            </div>
+            <div>
+              <p className="mb-2 text-[11px] uppercase tracking-wide text-zinc-600">Health distribution</p>
+              <HealthBars projects={bundle.projects} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="glass-card space-y-4 rounded-2xl p-6">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-teal-400/90">Add project</h2>

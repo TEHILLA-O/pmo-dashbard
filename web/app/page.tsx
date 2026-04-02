@@ -1,5 +1,8 @@
 "use client";
 
+import { BudgetActualBars } from "@/components/charts/budget-actual-bars";
+import { HealthBars } from "@/components/charts/health-bars";
+import { StatusDonut } from "@/components/charts/status-donut";
 import { HomeProjectList } from "@/components/home-project-list";
 import { KpiGrid } from "@/components/kpi-grid";
 import { QuickLinks } from "@/components/quick-links";
@@ -30,13 +33,31 @@ export default function HomePage() {
 
       <QuickLinks />
 
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">Delivery status mix</p>
+          <StatusDonut onTrack={k.on_track} atRisk={k.at_risk} delayed={k.delayed} />
+        </div>
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">Health score distribution</p>
+          <HealthBars projects={bundle.projects} />
+        </div>
+      </div>
+
       <HomeProjectList />
+
+      <div className="glass-card rounded-2xl p-5">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+          Budget vs spend (largest programmes, £m)
+        </p>
+        <BudgetActualBars projects={bundle.projects} limit={10} />
+      </div>
 
       <KpiGrid k={k} />
 
       <p className="text-xs text-zinc-600">
-        <strong className="text-zinc-500">Tip:</strong> open Executive Overview for the portfolio-wide
-        health snapshot and charts.
+        <strong className="text-zinc-500">Tip:</strong> every section in the sidebar includes charts or
+        tables — Executive Overview has the deepest delivery and cost views.
       </p>
     </div>
   );

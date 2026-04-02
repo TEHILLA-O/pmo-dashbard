@@ -1,7 +1,10 @@
 "use client";
 
+import { BudgetActualBars } from "@/components/charts/budget-actual-bars";
 import { HealthBars } from "@/components/charts/health-bars";
+import { ProgressBarsHorizontal } from "@/components/charts/progress-bars-h";
 import { StatusDonut } from "@/components/charts/status-donut";
+import { UtilizationBars } from "@/components/charts/utilization-bars";
 import { usePortfolio } from "@/contexts/portfolio-context";
 import { getBundleKpis } from "@/lib/metrics";
 
@@ -52,6 +55,28 @@ export default function ExecutivePage() {
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">Health distribution</p>
           <HealthBars projects={bundle.projects} />
         </div>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Budget vs actual spend (£m)
+          </p>
+          <BudgetActualBars projects={bundle.projects} limit={12} />
+        </div>
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Resource utilisation by project (%)
+          </p>
+          <UtilizationBars projects={bundle.projects} limit={12} />
+        </div>
+      </div>
+
+      <div className="glass-card rounded-2xl p-5">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+          Planned vs actual progress (%)
+        </p>
+        <ProgressBarsHorizontal projects={bundle.projects} limit={14} />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">

@@ -1,5 +1,7 @@
 "use client";
 
+import { HealthBars } from "@/components/charts/health-bars";
+import { OpenRisksDistribution } from "@/components/charts/open-risks-distribution";
 import { RiskScatter } from "@/components/charts/risk-scatter";
 import { usePortfolio } from "@/contexts/portfolio-context";
 
@@ -14,7 +16,25 @@ export default function RiskPage() {
       </div>
 
       <div className="glass-card rounded-2xl p-6">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+          Risk probability × impact
+        </p>
         <RiskScatter projects={bundle.projects} />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Open risks per project (count)
+          </p>
+          <OpenRisksDistribution projects={bundle.projects} />
+        </div>
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Portfolio health bands
+          </p>
+          <HealthBars projects={bundle.projects} />
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">

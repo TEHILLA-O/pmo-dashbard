@@ -1,5 +1,7 @@
 "use client";
 
+import { PriorityMixBars } from "@/components/charts/priority-mix-bars";
+import { StrategicRoiScatter } from "@/components/charts/strategic-roi-scatter";
 import { usePortfolio } from "@/contexts/portfolio-context";
 
 export default function PrioritizationPage() {
@@ -13,6 +15,21 @@ export default function PrioritizationPage() {
       <div>
         <h1 className="font-[family-name:var(--font-instrument)] text-3xl text-white">Prioritization</h1>
         <p className="mt-1 text-sm text-zinc-500">Strategic alignment and scoring</p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Strategic fit vs ROI (colour = priority)
+          </p>
+          <StrategicRoiScatter projects={bundle.projects} />
+        </div>
+        <div className="glass-card rounded-2xl p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Priority mix
+          </p>
+          <PriorityMixBars projects={bundle.projects} />
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-white/10">
